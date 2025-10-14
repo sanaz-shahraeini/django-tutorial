@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جزوه آموزشی جنگو — روز اول: مقدمات، محیط مجازی و دستورات</title>
+  <style>
+  body {
+    font-family: Vazirmatn, IRANSans, "Segoe UI", Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0; background: #fafafa; color: #222;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 980px; margin: 24px auto; padding: 20px 18px;
+    background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  }
+  h1, h2, h3 { color: #0f172a; margin-top: 1.2em; }
+  h1 { font-size: 1.8rem; margin-top: 0; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+  .lead { background: #eef2ff; border: 1px solid #c7d2fe; padding: 16px; border-radius: 10px; }
+  .pill {
+    display: inline-block; background: #f1f5f9; color: #0f172a; padding: 6px 10px;
+    border-radius: 999px; font-size: .86rem; margin-left: 6px; margin-bottom: 6px;
+    border: 1px solid #e2e8f0;
+  }
+  code, pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: .92rem;
+    direction: ltr; unicode-bidi: plaintext;
+  }
+  pre {
+    background: #0b1020; color: #e5e7eb; padding: 14px; border-radius: 10px; overflow: auto;
+    border: 1px solid #111827;
+  }
+  table {
+    width: 100%; border-collapse: collapse; margin: 10px 0 16px;
+    border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;
+  }
+  th, td {
+    text-align: right; padding: 10px 12px; border-bottom: 1px solid #eef2f7;
+    vertical-align: top;
+  }
+  thead th { background: #f8fafc; color: #0f172a; }
+  .tips { background: #ecfeff; border: 1px solid #a5f3fc; padding: 12px; border-radius: 10px; color: #164e63; }
+  .footer { margin-top: 28px; font-size: .9rem; color: #475569; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 جزوه آموزشی جنگو (Django) — روز اول</h1>
+    <p class="lead"><strong>موضوع:</strong> مفاهیم پایهٔ بک‌اند و جنگو، راه‌اندازی محیط مجازی، دستورات اصلی</p>
+
+    <section>
+      <h2>۱) مقدمه‌ای بر بک‌اند و جنگو</h2>
+      <p><strong>بک‌اند</strong> بخش پنهان برنامه‌های وب است که منطق، پایگاه‌داده و احراز هویت را مدیریت می‌کند. 
+      <strong>جنگو</strong> یک فریم‌ورک سطح‌بالای پایتون است با امکانات داخلی مانند پنل ادمین، ORM، سیستم URL و Template.</p>
+    </section>
+
+    <section>
+      <h2>۲) اجزای اصلی جنگو (MTV)</h2>
+      <table>
+        <thead><tr><th>جزء</th><th>توضیح</th><th>مثال / نقش</th></tr></thead>
+        <tbody>
+          <tr><td>Model (مدل)</td><td>تعریف ساختار داده‌ها و ارتباط با DB</td><td><code>models.py</code></td></tr>
+          <tr><td>View (نما)</td><td>منطق پردازش درخواست و پاسخ</td><td><code>views.py</code></td></tr>
+          <tr><td>Template (قالب)</td><td>نمایش داده‌ها در HTML</td><td>پوشهٔ <code>templates/</code></td></tr>
+          <tr><td>URL</td><td>نگاشت مسیرها به Viewها</td><td><code>urls.py</code></td></tr>
+          <tr><td>Migration</td><td>اعمال تغییرات مدل‌ها در DB</td><td><code>makemigrations</code> و <code>migrate</code></td></tr>
+          <tr><td>Admin</td><td>رابط آمادهٔ CRUD</td><td><code>/admin</code></td></tr>
+          <tr><td>App</td><td>ماژول با هدف مشخص</td><td>models, views, urls و...</td></tr>
+          <tr><td>Project</td><td>تنظیمات سراسری</td><td>پوشهٔ اصلی پروژه</td></tr>
+          <tr><td>Superuser</td><td>کاربر ارشد پنل مدیریت</td><td><code>createsuperuser</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>۳) دستورات خط فرمان جنگو</h2>
+      <table>
+        <thead><tr><th>دستور</th><th>کاربرد</th><th>نمونه</th></tr></thead>
+        <tbody>
+          <tr><td><code>django-admin startproject myproject</code></td><td>ایجاد پروژه جدید</td><td><code>django-admin startproject blogsite</code></td></tr>
+          <tr><td><code>python manage.py startapp myapp</code></td><td>ایجاد اپلیکیشن</td><td><code>python manage.py startapp accounts</code></td></tr>
+          <tr><td><code>python manage.py runserver</code></td><td>اجرای سرور توسعه</td><td><code>python manage.py runserver</code></td></tr>
+          <tr><td><code>python manage.py makemigrations</code></td><td>ساخت فایل مهاجرت</td><td><code>python manage.py makemigrations</code></td></tr>
+          <tr><td><code>python manage.py migrate</code></td><td>اعمال مهاجرت‌ها</td><td><code>python manage.py migrate</code></td></tr>
+          <tr><td><code>python manage.py createsuperuser</code></td><td>ساخت ادمین</td><td><code>python manage.py createsuperuser</code></td></tr>
+          <tr><td><code>python manage.py shell</code></td><td>شل تعاملی با محیط جنگو</td><td><code>python manage.py shell</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>۴) راه‌اندازی محیط مجازی</h2>
+      <h3>الف) بررسی نسخهٔ پایتون</h3>
+      <pre><code>python --version</code></pre>
+      <h3>ب) ایجاد محیط مجازی</h3>
+      <pre><code>python -m venv venv</code></pre>
+      <h3>پ) فعال‌سازی محیط</h3>
+      <div class="grid">
+        <pre><code># ویندوز
+venv\Scriptsctivate</code></pre>
+        <pre><code># لینوکس/مک
+source venv/bin/activate</code></pre>
+      </div>
+      <h3>ت) نصب جنگو</h3>
+      <pre><code>pip install django</code></pre>
+    </section>
+
+    <section class="footer">
+      <p>تهیه و بازنویسی آموزشی: ساناز شهرائینی — «مقدمات جنگو»</p>
+    </section>
+  </div>
+</body>
+</html>
