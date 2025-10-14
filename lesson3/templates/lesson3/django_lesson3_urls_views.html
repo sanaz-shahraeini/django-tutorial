@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جزوه آموزشی جنگو — روز سوم: اتصال پروژه و برنامه با URLs و HTTP Response</title>
+  <style>
+  body {
+    font-family: Vazirmatn, IRANSans, "Segoe UI", Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0; background: #fafafa; color: #222;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 980px; margin: 24px auto; padding: 20px 18px;
+    background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  }
+  h1, h2, h3 { color: #0f172a; margin-top: 1.2em; }
+  h1 { font-size: 1.8rem; margin-top: 0; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+  .lead { background: #eef2ff; border: 1px solid #c7d2fe; padding: 16px; border-radius: 10px; }
+  .pill {
+    display: inline-block; background: #f1f5f9; color: #0f172a; padding: 6px 10px;
+    border-radius: 999px; font-size: .86rem; margin-left: 6px; margin-bottom: 6px;
+    border: 1px solid #e2e8f0;
+  }
+  code, pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: .92rem;
+    direction: ltr; unicode-bidi: plaintext;
+  }
+  pre {
+    background: #0b1020; color: #e5e7eb; padding: 14px; border-radius: 10px; overflow: auto;
+    border: 1px solid #111827;
+  }
+  table {
+    width: 100%; border-collapse: collapse; margin: 10px 0 16px;
+    border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;
+  }
+  th, td {
+    text-align: right; padding: 10px 12px; border-bottom: 1px solid #eef2f7;
+    vertical-align: top;
+  }
+  thead th { background: #f8fafc; color: #0f172a; }
+  .tips { background: #ecfeff; border: 1px solid #a5f3fc; padding: 12px; border-radius: 10px; color: #164e63; }
+  .footer { margin-top: 28px; font-size: .9rem; color: #475569; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 جزوه آموزشی جنگو (Django) — روز سوم</h1>
+    <p class="lead"><strong>موضوع:</strong> ایجاد App، اتصال URLها و ساخت View با پاسخ‌های HTTP</p>
+
+    <section>
+      <h2>۱) ایجاد و ساختار برنامه (App)</h2>
+      <p>برای ساخت یک برنامهٔ جدید در کنار <code>manage.py</code> اجرا کنید:</p>
+      <pre><code>python manage.py startapp app_name</code></pre>
+
+      <h3>فایل‌های کلیدی App</h3>
+      <table>
+        <thead><tr><th>فایل</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td><code>models.py</code></td><td>تعریف مدل‌ها و ساختار داده‌ها (ORM)</td></tr>
+          <tr><td><code>views.py</code></td><td>تعریف توابع/کلاس‌های View برای پاسخ به درخواست‌ها</td></tr>
+          <tr><td><code>admin.py</code></td><td>ثبت مدل‌ها در پنل ادمین</td></tr>
+          <tr><td><code>urls.py</code></td><td>تعریف مسیرهای برنامه (به‌صورت دستی ایجاد شود)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>۲) فرآیند سه‌مرحله‌ای اتصال URL به View</h2>
+
+      <h3>مرحله ۱: ثبت برنامه در <code>INSTALLED_APPS</code></h3>
+      <pre><code>INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    ...
+    'app_name',
+]</code></pre>
+
+      <h3>مرحله ۲: اتصال URLهای پروژه به برنامه</h3>
+      <pre><code># project/urls.py
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('app_name.urls')),  # ارجاع به urls برنامه
+]</code></pre>
+
+      <h3>مرحله ۳: تعریف مسیرها در <code>app_name/urls.py</code></h3>
+      <pre><code># app_name/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('contact_us/', views.contact, name='contact'),
+]</code></pre>
+    </section>
+
+    <section>
+      <h2>۳) ساخت View و پاسخ‌های HTTP</h2>
+      <pre><code># app_name/views.py
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("این صفحه اصلی (Homepage) است.")
+
+def contact(request):
+    return HttpResponse("این صفحه تماس با ما است.")</code></pre>
+
+      <div class="tips">
+        <strong>نکته:</strong> می‌توانید به جای <code>HttpResponse</code> از <code>render</code> برای رندر قالب‌های HTML استفاده کنید.
+      </div>
+    </section>
+
+    <section>
+      <h2>۴) خطاهای رایج</h2>
+      <table>
+        <thead><tr><th>خطا</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td>404 Not Found</td><td>مسیر (URL) تعریف نشده است.</td></tr>
+          <tr><td>AttributeError</td><td>URL به View ناموجود ارجاع داده شده است.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="footer">
+      <p>تهیه و بازنویسی آموزشی: ساناز شهرائینی — «اتصال URLها و ساخت View»</p>
+    </section>
+  </div>
+</body>
+</html>

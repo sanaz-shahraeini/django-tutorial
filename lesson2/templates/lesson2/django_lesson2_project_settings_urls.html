@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جزوه آموزشی جنگو — روز دوم: ساختار پروژه، Settings و URLs</title>
+  <style>
+  body {
+    font-family: Vazirmatn, IRANSans, "Segoe UI", Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0; background: #fafafa; color: #222;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 980px; margin: 24px auto; padding: 20px 18px;
+    background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  }
+  h1, h2, h3 { color: #0f172a; margin-top: 1.2em; }
+  h1 { font-size: 1.8rem; margin-top: 0; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+  .lead { background: #eef2ff; border: 1px solid #c7d2fe; padding: 16px; border-radius: 10px; }
+  .pill {
+    display: inline-block; background: #f1f5f9; color: #0f172a; padding: 6px 10px;
+    border-radius: 999px; font-size: .86rem; margin-left: 6px; margin-bottom: 6px;
+    border: 1px solid #e2e8f0;
+  }
+  code, pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: .92rem;
+    direction: ltr; unicode-bidi: plaintext;
+  }
+  pre {
+    background: #0b1020; color: #e5e7eb; padding: 14px; border-radius: 10px; overflow: auto;
+    border: 1px solid #111827;
+  }
+  table {
+    width: 100%; border-collapse: collapse; margin: 10px 0 16px;
+    border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;
+  }
+  th, td {
+    text-align: right; padding: 10px 12px; border-bottom: 1px solid #eef2f7;
+    vertical-align: top;
+  }
+  thead th { background: #f8fafc; color: #0f172a; }
+  .tips { background: #ecfeff; border: 1px solid #a5f3fc; padding: 12px; border-radius: 10px; color: #164e63; }
+  .footer { margin-top: 28px; font-size: .9rem; color: #475569; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 جزوه آموزشی جنگو (Django) — روز دوم</h1>
+    <p class="lead"><strong>موضوع:</strong> درک ساختار پروژه، تنظیمات (Settings) و مسیردهی (URLs)</p>
+
+    <section>
+      <h2>۱) شروع و اجرای پروژه</h2>
+      <ul>
+        <li><span class="pill">فعال‌سازی محیط مجازی</span> محیط ساخته‌شده در روز اول را فعال کنید.</li>
+        <li><span class="pill">اجرای سرور</span>
+          <pre><code>python manage.py runserver</code></pre>
+        </li>
+        <li><span class="pill">ایجاد پایگاه‌داده پیش‌فرض</span> با اولین اجرا فایل <code>db.sqlite3</code> ساخته می‌شود.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>۲) ساختار فایل‌ها پس از startproject</h2>
+      <table>
+        <thead><tr><th>نام</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td><code>manage.py</code></td><td>اجرای دستورات مدیریتی پروژه</td></tr>
+          <tr><td><code>projectname/</code></td><td>پوشهٔ تنظیمات اصلی پروژه</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>۳) فایل‌های کلیدی تنظیمات</h2>
+
+      <h3>الف) settings.py</h3>
+      <table>
+        <thead><tr><th>تنظیم</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td><code>DEBUG</code></td><td>در توسعه <code>True</code>، در تولید <code>False</code></td></tr>
+          <tr><td><code>ALLOWED_HOSTS</code></td><td>دامنه‌ها/آی‌پی‌های مجاز هنگام <code>DEBUG=False</code></td></tr>
+          <tr><td><code>INSTALLED_APPS</code></td><td>ثبت برنامه‌ها و ماژول‌های فعال</td></tr>
+          <tr><td><code>TIME_ZONE</code></td><td>منطقهٔ زمانی (مثلاً <code>Asia/Tehran</code>)</td></tr>
+          <tr><td><code>DATABASES</code></td><td>تنظیمات اتصال پایگاه‌داده (پیش‌فرض: SQLite)</td></tr>
+          <tr><td><code>STATIC_URL</code></td><td>آدرس پایهٔ فایل‌های استاتیک</td></tr>
+        </tbody>
+      </table>
+
+      <h3>ب) urls.py (مسیردهی اصلی)</h3>
+      <p>اتصال مسیرهای سراسری پروژه به مسیرهای اپلیکیشن‌ها با <code>include</code> انجام می‌شود.</p>
+      <pre><code>from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls')),
+]</code></pre>
+
+      <h3>ج) فایل‌های دیگر</h3>
+      <table>
+        <thead><tr><th>فایل</th><th>کاربرد</th></tr></thead>
+        <tbody>
+          <tr><td><code>wsgi.py</code></td><td>ارتباط با سرورهای WSGI در استقرار</td></tr>
+          <tr><td><code>asgi.py</code></td><td>ارتباط با سرورهای ASGI (وب‌سوکت و async)</td></tr>
+          <tr><td><code>__init__.py</code></td><td>تعریف پکیج پایتون</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="footer">
+      <p>تهیه و بازنویسی آموزشی: ساناز شهرائینی — «ساختار پروژه و مسیردهی»</p>
+    </section>
+  </div>
+</body>
+</html>
