@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📘 آموزش DjangoLab | جزوه‌های روز ۱ تا ۸</title>
+  <style>
+    :root {
+      --bg-start: #fafafa;
+      --bg-end: #f1f5f9;
+      --text: #0f172a;
+      --muted: #64748b;
+      --header-start: #7c3aed; /* violet-600 */
+      --header-end: #ec4899;   /* pink-500 */
+      --accent: #8b5cf6;       /* violet-500 */
+      --accent-hover: #7c3aed; /* violet-600 */
+      --card-bg: #ffffff;
+      --card-border: rgba(2, 6, 23, 0.06);
+      --shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
+      --shadow-lg: 0 10px 24px rgba(2, 6, 23, 0.12);
+    }
+
+    body {
+      font-family: Vazirmatn, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(139, 92, 246, 0.08), transparent 40%),
+        radial-gradient(1200px 600px at 90% -10%, rgba(236, 72, 153, 0.08), transparent 40%),
+        linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+      color: var(--text);
+      margin: 0;
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--header-start), var(--header-end));
+      color: #fff;
+      padding: 48px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      margin-top: 10px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 44px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card h3 {
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .card a {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 9px 16px;
+      border-radius: 10px;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .card a:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    footer {
+      background: linear-gradient(180deg, #f8fafc, #eef2ff);
+      text-align: center;
+      color: var(--muted);
+      padding: 16px;
+      font-size: 0.92rem;
+      margin-top: 40px;
+      border-top: 1px solid rgba(2, 6, 23, 0.06);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📘 آموزش Django </h1>
+    <p>جزوه‌های روز ۱ تا ۸ — بر اساس کلاس آموزشی و تمرین‌های عملی</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h3>روز ۱: مقدمات و محیط مجازی</h3>
+      <a href="{% url 'lesson1_tutorial' %}" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۲: ساختار پروژه، تنظیمات و مسیرها</h3>
+      <a href="{% url 'lesson2_tutorial' %}" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۳: اتصال URLها به Viewها و پاسخ‌های HTTP</h3>
+      <a href="{% url 'lesson3_tutorial' %}" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۴: قالب‌های HTML و فایل‌های استاتیک</h3>
+      <a href="{% url 'lesson4_tutorial' %}" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۵: مرور فایل‌های استاتیک و Templateها</h3>
+      <a href="django_lesson5_templates_static_summary.html" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۶: مفهوم وراثت Template و Base Template</h3>
+      <a href="django_lesson6_template_inheritance.html" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۷: وراثت Template و پیمایش با تگ URL</h3>
+      <a href="django_lesson7_template_inheritance_url.html" target="_blank">مشاهده جزوه</a>
+    </div>
+    <div class="card">
+      <h3>روز ۸: مقدمه‌ای بر GitHub و کنترل نسخه</h3>
+      <a href="django_lesson8_github_intro.html" target="_blank">مشاهده جزوه</a>
+    </div>
+  </main>
+
+  <footer>
+    طراحی و گردآوری: <strong>ساناز شهرائینی</strong> | 2025 DjangoLab
+  </footer>
+</body>
+</html>
