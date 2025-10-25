@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جزوه آموزشی جنگو — روز هشتم: مقدمه‌ای بر GitHub و کنترل نسخه</title>
+  <style>
+    body {
+      font-family: Vazirmatn, IRANSans, "Segoe UI", Tahoma, Arial, sans-serif;
+      margin: 0; padding: 0; background: #fafafa; color: #222;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 980px; margin: 24px auto; padding: 22px 18px;
+      background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+    h1, h2, h3 { color: #0f172a; margin-top: 1.2em; }
+    h1 { font-size: 1.8rem; margin-top: 0; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.1rem; }
+    .lead {
+      background: #eef2ff; border: 1px solid #c7d2fe; padding: 16px; border-radius: 10px;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .92rem; direction: ltr; unicode-bidi: plaintext;
+    }
+    pre {
+      background: #0b1020; color: #e5e7eb; padding: 14px; border-radius: 10px; overflow: auto;
+      border: 1px solid #111827; margin: 12px 0;
+    }
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0 16px;
+      border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;
+    }
+    th, td {
+      text-align: right; padding: 10px 12px; border-bottom: 1px solid #eef2f7;
+      vertical-align: top;
+    }
+    thead th { background: #f8fafc; color: #0f172a; }
+    .tips {
+      background: #ecfeff; border: 1px solid #a5f3fc; padding: 12px; border-radius: 10px; color: #164e63;
+      margin-top: 12px;
+    }
+    .footer {
+      margin-top: 28px; font-size: .9rem; color: #475569;
+    }
+    .checklist li { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 جزوه آموزشی جنگو (Django) — روز هشتم</h1>
+    <p class="lead"><strong>موضوع:</strong> مقدمه‌ای بر GitHub و کنترل نسخه (Version Control)</p>
+
+    <section>
+      <h2>۱) آشنایی با GitHub و اهمیت آن</h2>
+      <ul>
+        <li><strong>اشتراک‌گذاری کد:</strong> جایگزین حرفه‌ای ارسال فایل Zip از طریق ایمیل/پیام‌رسان.</li>
+        <li><strong>کنترل نسخه:</strong> هر Commit مانند یک «نقطهٔ بازگشت» با شناسهٔ یکتا است.</li>
+        <li><strong>همکاری تیمی:</strong> چندین توسعه‌دهنده می‌توانند همزمان روی پروژه کار کنند.</li>
+        <li><strong>استقرار (Deployment):</strong> اتصال مستقیم به سرویس‌هایی که با GitHub یکپارچه‌اند.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>۲) ایجاد مخزن (Repository) و اولین ارسال (Push)</h2>
+      <h3>گام‌های آنلاین</h3>
+      <ol>
+        <li>ساخت حساب کاربری در <em>github.com</em> و ورود.</li>
+        <li>ایجاد مخزن جدید (نام پیشنهادی: <code>DJ_Training</code>) و تعیین نوع <strong>Public/Private</strong>.</li>
+      </ol>
+
+      <h3>تنظیم مخزن محلی (Locally)</h3>
+      <pre><code># 1) فعال‌سازی گیت در پوشه پروژه
+git init
+
+# 2) افزودن همه فایل‌ها برای ردیابی
+git add .
+
+# 3) ایجاد اولین commit
+git commit -m "First commit"
+
+# 4) تغییر نام شاخه‌ی اصلی به main
+git branch -M main
+
+# 5) اتصال به مخزن آنلاین
+git remote add origin https://github.com/username/DJ_Training.git
+
+# 6) ارسال کدها به GitHub
+git push -u origin main</code></pre>
+      <p>پس از ارسال موفق، فایل‌های پروژه در مخزن GitHub نمایش داده می‌شوند.</p>
+    </section>
+
+    <section>
+      <h2>۳) مدیریت فایل‌های غیرضروری و به‌روزرسانی‌ها</h2>
+      <h3>الف) فایل <code>.gitignore</code></h3>
+      <p>این فایل تعیین می‌کند کدام فایل/پوشه‌ها به GitHub ارسال نشوند:</p>
+      <pre><code>venv/
+__pycache__/
+*.sqlite3
+.env
+</code></pre>
+
+      <h3>ب) فایل <code>requirements.txt</code></h3>
+      <p>برای ثبت وابستگی‌ها (Dependencies):</p>
+      <pre><code>pip freeze &gt; requirements.txt</code></pre>
+
+      <h3>ج) چرخهٔ به‌روزرسانی</h3>
+      <pre><code>git add .
+git commit -m "به‌روزرسانی فایل‌ها"
+git push</code></pre>
+    </section>
+
+    <section>
+      <h2>۴) کلون کردن (Cloning) مخزن</h2>
+      <ol>
+        <li>ورود به صفحهٔ مخزن در GitHub و کپی لینک HTTPS.</li>
+        <li>اجرای دستور زیر در ترمینال مقصد:</li>
+      </ol>
+      <pre><code>git clone https://github.com/username/DJ_Training.git</code></pre>
+      <p>کل پروژه در دایرکتوری جدید دانلود می‌شود و آمادهٔ اجرا/توسعه است.</p>
+    </section>
+
+    <section>
+      <h2>۵) جمع‌بندی مزایا</h2>
+      <table>
+        <thead><tr><th>مزیت</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td>کنترل نسخه‌ها</td><td>بازگشت به هر نسخه و مقایسهٔ تغییرات</td></tr>
+          <tr><td>همکاری تیمی</td><td>تقسیم کار و یکپارچه‌سازی کدها</td></tr>
+          <tr><td>پشتیبان‌گیری ابری</td><td>ذخیرهٔ امن کدها در GitHub</td></tr>
+          <tr><td>استقرار سریع‌تر</td><td>اتصال مستقیم به سرویس‌های Deployment</td></tr>
+          <tr><td>کد تمیزتر</td><td>با .gitignore و مدیریت وابستگی‌ها</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>۶) چک‌لیست تمرین</h2>
+      <ul class="checklist">
+        <li>ساخت مخزن در GitHub برای پروژهٔ جنگو</li>
+        <li>افزودن <code>.gitignore</code> و <code>requirements.txt</code></li>
+        <li>اجرای چرخهٔ <code>add &rarr; commit &rarr; push</code></li>
+        <li>تمرین کلون‌کردن پروژه روی یک سیستم دیگر</li>
+      </ul>
+    </section>
+
+    <section class="footer">
+      <p>تهیه و بازنویسی آموزشی: ساناز شهرائینی — «مقدمه‌ای بر GitHub و کنترل نسخه»</p>
+    </section>
+  </div>
+</body>
+</html>

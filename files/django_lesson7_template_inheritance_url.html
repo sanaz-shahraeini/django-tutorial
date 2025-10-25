@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جزوه آموزشی جنگو — روز هفتم: وراثت تمپلیت و پیمایش با تگ url</title>
+  <style>
+    body {
+      font-family: Vazirmatn, IRANSans, "Segoe UI", Tahoma, Arial, sans-serif;
+      margin: 0; padding: 0; background: #fafafa; color: #222;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 980px; margin: 24px auto; padding: 22px 18px;
+      background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+    h1, h2, h3 { color: #0f172a; margin-top: 1.2em; }
+    h1 { font-size: 1.8rem; margin-top: 0; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.1rem; }
+    .lead {
+      background: #eef2ff; border: 1px solid #c7d2fe; padding: 16px; border-radius: 10px;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .92rem; direction: ltr; unicode-bidi: plaintext;
+    }
+    pre {
+      background: #0b1020; color: #e5e7eb; padding: 14px; border-radius: 10px; overflow: auto;
+      border: 1px solid #111827; margin: 12px 0;
+    }
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0 16px;
+      border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;
+    }
+    th, td {
+      text-align: right; padding: 10px 12px; border-bottom: 1px solid #eef2f7;
+      vertical-align: top;
+    }
+    thead th { background: #f8fafc; color: #0f172a; }
+    .tips {
+      background: #ecfeff; border: 1px solid #a5f3fc; padding: 12px; border-radius: 10px; color: #164e63;
+      margin-top: 12px;
+    }
+    .footer {
+      margin-top: 28px; font-size: .9rem; color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 جزوه آموزشی جنگو (Django) — روز هفتم</h1>
+    <p class="lead"><strong>موضوع:</strong> وراثت تمپلیت‌ها (<em>Template Inheritance</em>) و پیمایش بین صفحات با تگ <code>{% raw %}{% url %}{% endraw %}</code></p>
+
+    <section>
+      <h2>۱) اعمال وراثت تمپلیت به صفحات دیگر</h2>
+      <p>پس از ساخت <code>base.html</code>، کدهای مشترک (CSS/JS، هدر، فوتر، ساختار HTML) را از تمپلیت‌های فرزند حذف کنید و فقط محتوای اختصاصی را داخل بلوک‌ها قرار دهید.</p>
+
+      <h3>نمونه: <code>about.html</code></h3>
+      <pre><code>{% raw %}{% extends 'base.html' %}{% endraw %}
+
+{% raw %}{% block title %}درباره ما{% endblock title %}{% endraw %}
+
+{% raw %}{% block content %}{% endraw %}
+&lt;h2&gt;درباره ما&lt;/h2&gt;
+&lt;p&gt;این صفحه اطلاعاتی درباره پروژه آموزشی جنگو ارائه می‌دهد.&lt;/p&gt;
+{% raw %}{% endblock content %}{% endraw %}</code></pre>
+      <p><strong>نکته:</strong> تگ {% raw %}{% extends %}{% endraw %} باید <u>اولین خط</u> در تمپلیت فرزند باشد.</p>
+    </section>
+
+    <section>
+      <h2>۲) استفاده از تگ <code>{% raw %}{% url %}{% endraw %}</code> برای ناوبری</h2>
+      <p>به‌جای هاردکد کردن مسیرها (مثل <code>&lt;a href="/about/"&gt;</code>) از نام مسیرها در <code>urls.py</code> استفاده کنید.</p>
+
+      <h3>الف) تعریف نام مسیرها در <code>urls.py</code></h3>
+      <pre><code>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('about/', views.about, name='about'),
+    path('blog/', views.blog, name='blog'),
+]</code></pre>
+
+      <h3>ب) استفاده در <code>base.html</code></h3>
+      <pre><code>&lt;nav&gt;
+  &lt;a href="{% raw %}{% url 'index' %}{% endraw %}"&gt;صفحه اصلی&lt;/a&gt;
+  &lt;a href="{% raw %}{% url 'about' %}{% endraw %}"&gt;درباره ما&lt;/a&gt;
+  &lt;a href="{% raw %}{% url 'blog' %}{% endraw %}"&gt;وبلاگ&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+
+      <div class="tips">
+        <p>برای صفحهٔ اصلی می‌توانید از <code>&lt;a href="/"&gt;</code> هم استفاده کنید، اما روش توصیه‌شده در پروژه‌های حرفه‌ای استفاده از <code>{% raw %}{% url 'index' %}{% endraw %}</code> است.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>۳) مزایای استفاده از <code>{% raw %}{% url %}{% endraw %}</code></h2>
+      <table>
+        <thead><tr><th>مزیت</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td>انعطاف‌پذیری</td><td>با تغییر مسیر در <code>urls.py</code> نیازی به اصلاح لینک‌ها در تمپلیت‌ها نیست.</td></tr>
+          <tr><td>پایداری</td><td>از لینک‌های شکسته به علت تغییر مسیر جلوگیری می‌کند.</td></tr>
+          <tr><td>کد تمیز</td><td>لینک‌ها معنایی و قابل نگهداری‌تر می‌شوند.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>۴) تمرین عملی</h2>
+      <ol>
+        <li>نام مسیر برای صفحات <code>index</code>، <code>about</code> و (اختیاری) <code>blog</code> را در <code>urls.py</code> تعریف کنید.</li>
+        <li>در <code>base.html</code> منوی ناوبری را با <code>{% raw %}{% url %}{% endraw %}</code> پیاده‌سازی کنید.</li>
+        <li>تمپلیت‌های فرزند را با <code>{% raw %}{% extends 'base.html' %}{% endraw %}</code> و بلوک‌های <code>title</code> و <code>content</code> بسازید.</li>
+        <li>مسیر <code>/about/</code> را به <code>/about-us/</code> تغییر دهید و بررسی کنید که لینک‌ها همچنان صحیح کار می‌کنند.</li>
+      </ol>
+    </section>
+
+    <section class="footer">
+      <p>تهیه و بازنویسی آموزشی: ساناز شهرائینی — «Template Inheritance &amp; URL Tag»</p>
+    </section>
+  </div>
+</body>
+</html>

@@ -24,5 +24,6 @@ urlpatterns = [
     path ('lesson2/',include('lesson2.urls')),
     path ('lesson3/',include('lesson3.urls')),
     path ('lesson4/',include('lesson4.urls')),
+    path ('lesson5/',include('lesson5.urls')),
     
 ]
